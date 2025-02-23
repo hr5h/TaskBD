@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.taskbd.data.ApiClient
+import com.example.taskbd.data.ApiService
 import com.example.taskbd.data.BouquetWithFlowers
 import com.example.taskbd.data.MainDb
 import com.example.taskbd.data.entities.Bouquet
@@ -11,6 +13,7 @@ import com.example.taskbd.data.entities.BouquetFlowerCrossRef
 import com.example.taskbd.data.entities.Flower
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val database: MainDb) : ViewModel() {
@@ -26,6 +29,10 @@ class MainViewModel(private val database: MainDb) : ViewModel() {
             getBouquets().forEach {
                 println(it)
             }
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(1000)
+            fetchData()
         }
     }
 
@@ -79,6 +86,12 @@ class MainViewModel(private val database: MainDb) : ViewModel() {
             flowerInDb.quantity -= quantityToSubtract
             database.flowerDao().update(flowerInDb)
         }
+    }
+
+    private suspend fun fetchData() {
+        val apiService = ApiClient.retrofit.create(ApiService::class.java)
+        val response = apiService.getData()
+        println("Response: $response")
     }
 
     companion object {
