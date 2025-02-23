@@ -7,7 +7,8 @@ import com.example.taskbd.data.entities.Bouquet.Companion.BOUQUET_TABLE_NAME
 @Entity(tableName = BOUQUET_TABLE_NAME)
 data class Bouquet(
     @PrimaryKey val id: Int,
-    val name: String
+    val name: String,
+    val decoration: String = "Крафтовая бумага"
 ) {
     companion object {
         const val BOUQUET_TABLE_NAME = "bouquets"

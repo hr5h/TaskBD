@@ -9,7 +9,8 @@ data class Flower(
     @PrimaryKey val id: Int,
     val name: String,
     val color: String,
-    var quantity: Int
+    var quantity: Int,
+    val country: String = "Неизвестно"
 ) {
     companion object {
         const val FLOWER_TABLE_NAME = "flowers"
