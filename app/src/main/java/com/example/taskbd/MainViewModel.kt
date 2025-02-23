@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.taskbd.car.Car
+import com.example.taskbd.car.CarFactory
+import com.example.taskbd.car.FordFactory
+import com.example.taskbd.car.ToyotaFactory
 import com.example.taskbd.data.ApiClient
 import com.example.taskbd.data.ApiService
 import com.example.taskbd.data.BouquetWithFlowers
@@ -34,6 +38,30 @@ class MainViewModel(private val database: MainDb) : ViewModel() {
             delay(1000)
             fetchData()
         }
+        val car = Car.Builder()
+            .setBrand("Toyota")
+            .setModel("Camry")
+            .setYear(2022)
+            .setColor("Red")
+            .setEngine("V8")
+            .setTransmission("Manual")
+            .build()
+
+        println(car)
+
+        val toyotaFactory: CarFactory = ToyotaFactory()
+        val toyotaSedan = toyotaFactory.createSedan()
+        val toyotaSUV = toyotaFactory.createSUV()
+
+        println("Toyota Sedan: $toyotaSedan")
+        println("Toyota SUV: $toyotaSUV")
+
+        val fordFactory: CarFactory = FordFactory()
+        val fordSedan = fordFactory.createSedan()
+        val fordSUV = fordFactory.createSUV()
+
+        println("Ford Sedan: $fordSedan")
+        println("Ford SUV: $fordSUV")
     }
 
     private fun initData() {
